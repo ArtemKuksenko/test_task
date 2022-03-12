@@ -11,7 +11,6 @@ def startup_tasks():
 
 
 async def close_redis():
-    print('close_redis')
     await redis.close()
 
 app = FastAPI(

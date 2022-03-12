@@ -3,10 +3,13 @@ services:
   app:
     build:
       context: .
-      network: "host"
+    ports:
+      - "8087:8087"
     restart: on-failure
     command: >
       bash -c "python start.py"
     env_file:
       - .env.config
-    network_mode: "host"
+
+  redis:
+    image: redis
