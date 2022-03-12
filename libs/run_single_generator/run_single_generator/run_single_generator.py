@@ -17,7 +17,7 @@ class RunSingleGenerator:
                 await r_data.clear_res()
 
             res = None
-            g = users_generator()
+            g = users_generator(*args, **kwargs)
 
             while True:
                 if await r_data.is_somebody_want_rerun_alg(my_number):
