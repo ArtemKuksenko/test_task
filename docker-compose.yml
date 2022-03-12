@@ -1,14 +1,15 @@
 version: "3"
 services:
-  api_app:
+  app:
     build:
       context: .
-      network: "host"
+    ports:
+      - "8087:8087"
     restart: on-failure
     command: >
       bash -c "python start.py"
-    volumes:
-      - ./logs:/opt/app/logs
     env_file:
       - .env.config
-    network_mode: "host"
+
+  redis:
+    image: redis

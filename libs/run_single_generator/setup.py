@@ -7,7 +7,7 @@ setup(
     description="""
         Starts only one generator.
         If called again, it will kill the old call and start calculating again.
-        Warning: generator must return something truthly.
+        Warning: generator must return truthly object.
     """,
     install_requires=[
         'aioredis==2.0.1'
