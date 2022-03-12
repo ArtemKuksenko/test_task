@@ -3,3 +3,4 @@ uvicorn==0.17.5
 uvloop==0.16.0
 python-dotenv
 pydantic==1.9.0
+aioredis==2.0.1

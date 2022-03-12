@@ -1,8 +1,18 @@
+import asyncio
+
 from fastapi.routing import APIRouter
+
+from app.core.managers import run_generator
 
 router = APIRouter(prefix="/calculate", tags=["calculatesomething"])
 
 
-@router.post("/")
-async def ping():
-    return "pong"
+@router.get("/")
+@run_generator
+async def calculate():
+    for i in range(30):
+        await asyncio.sleep(1)
+        yield
+
+    yield {"result": "ok"}
+
