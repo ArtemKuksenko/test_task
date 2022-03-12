@@ -1,8 +1,6 @@
 import asyncio
 import pickle
 
-from aioredis.client import Pipeline
-
 AWAIT_TIME = 0.1
 
 
@@ -35,29 +33,3 @@ class RedisController:
 
     async def clear_res(self):
         await self.redis.delete(self.key_res)
-
-    # async def is_running(self) -> bool:
-    #     return bool(await self.pipe.get(self.running_key))
-    #
-    # async def is_stopped(self) -> bool:
-    #     return bool(await self.pipe.get(self.running_key))
-    #
-    # async def stop_running(self) -> None:
-    #     await self.pipe.set(self.stop_key, True)
-    #     await self.pipe.execute()
-    #
-    #     #  Ждем пока алгоритм не будет остановлен
-    #     while True:
-    #         await asyncio.sleep(AWAIT_TIME)
-
-
-
-    # async def get_data(self) -> dict:
-    #     data = await self.pipe.get(self.key)
-    #     if not data:
-    #         return dict()
-    #     return pickle.loads(data)
-    #
-    # async def set_data(self, data: dict) -> None:
-    #     await self.pipe.set(self.key, pickle.dumps(data))
-    #     await self.pipe.execute()
