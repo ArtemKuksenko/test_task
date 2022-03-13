@@ -16,4 +16,3 @@ async def calculate():
         yield
 
     yield {"result": "ok"}
-
