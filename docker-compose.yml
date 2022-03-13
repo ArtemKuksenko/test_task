@@ -12,4 +12,4 @@ services:
       - .env.config
 
   redis:
-    image: "redis"
+    image: redis
