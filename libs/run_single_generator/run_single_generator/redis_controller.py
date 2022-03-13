@@ -10,6 +10,7 @@ class RedisController:
         key = f"run_single_generator:{name}"
         self.key_number = f"{key}:number"
         self.key_res = f"{key}:res"
+        self.key_running = f"{key}:run"
 
     async def incr(self) -> int:
         return await self.redis.incr(self.key_number)
@@ -28,8 +29,23 @@ class RedisController:
             if res:
                 return pickle.loads(res)
 
-    async def set_result(self, res):
+    async def set_result(self, res) -> None:
         await self.redis.set(self.key_res, pickle.dumps(res))
+        await self.redis.delete(self.key_number)
+        await self.redis.delete(self.key_running)
 
-    async def clear_res(self):
+    async def clear_res(self) -> None:
         await self.redis.delete(self.key_res)
+
+    async def set_running(self) -> None:
+        await self.redis.set(self.key_running, 1)
+
+    async def set_stopped(self) -> None:
+        await self.redis.set(self.key_running, 0)
+
+    async def await_stop_running(self) -> None:
+        while True:
+            await asyncio.sleep(AWAIT_TIME)
+            is_running = await self.redis.get(self.key_running)
+            if is_running == b'0':
+                return

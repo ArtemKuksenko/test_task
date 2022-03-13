@@ -10,6 +10,7 @@ router = APIRouter(prefix="/calculate", tags=["calculatesomething"])
 @router.get("/")
 @run_generator
 async def calculate():
+    print("run")
     for i in range(15):
         await asyncio.sleep(1)
         yield
