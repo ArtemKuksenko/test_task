@@ -2,12 +2,13 @@ import asyncio
 import pickle
 
 AWAIT_TIME = 0.1
+REDIS_KEY = "run_single_generator"
 
 
 class RedisController:
     def __init__(self, redis, name: str):
         self.redis = redis
-        key = f"run_single_generator:{name}"
+        key = f"{REDIS_KEY}:{name}"
         self.key_number = f"{key}:number"
         self.key_res = f"{key}:res"
         self.key_running = f"{key}:run"

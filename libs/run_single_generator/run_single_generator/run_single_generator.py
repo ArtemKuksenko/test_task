@@ -1,12 +1,21 @@
 from functools import wraps
 
 import aioredis
-from .redis_controller import RedisController
+from .redis_controller import RedisController, REDIS_KEY
 
 
 class RunSingleGenerator:
     def __init__(self, redis: aioredis.StrictRedis):
         self.redis = redis
+
+    async def clear_redis_data(self) -> None:
+        keys = await self.redis.keys(f"{REDIS_KEY}:*")
+        if not keys:
+            return
+        pipe = await self.redis.pipeline()
+        for k in keys:
+            await pipe.delete(k)
+        await pipe.execute()
 
     def __call__(self, users_generator):
         @wraps(users_generator)
