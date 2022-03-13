@@ -5,11 +5,16 @@ from .redis_controller import RedisController, REDIS_KEY
 
 
 class RunSingleGenerator:
-    def __init__(self, redis: aioredis.StrictRedis):
+    def __init__(self, redis: aioredis.StrictRedis, app_predix: str):
         self.redis = redis
+        self.app_predix = app_predix
 
     async def clear_redis_data(self) -> None:
-        keys = await self.redis.keys(f"{REDIS_KEY}:*")
+        """
+        Очищаем данные ключа редис
+        :return:
+        """
+        keys = await self.redis.keys(f"{REDIS_KEY}:{self.app_predix}:*")
         if not keys:
             return
         pipe = await self.redis.pipeline()
@@ -20,10 +25,13 @@ class RunSingleGenerator:
     def __call__(self, users_generator):
         @wraps(users_generator)
         async def wrapper(*args, **kwargs):
-            r_data = RedisController(self.redis, users_generator.__name__)
+            r_data = RedisController(
+                self.redis, self.app_predix, users_generator.__name__
+            )
             my_number = await r_data.incr()
             print(f"enter {my_number}")
             if my_number == 1:
+                # при первом вызове очищаем результат вычислений
                 await r_data.clear_res()
                 await r_data.set_running()
             else:

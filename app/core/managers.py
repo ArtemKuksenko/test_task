@@ -10,4 +10,4 @@ redis = utils.create_redis_client(
     password=settings.REDIS_PASSWORD
 )
 
-run_generator = RunSingleGenerator(redis)
+run_generator = RunSingleGenerator(redis, "my_app")
