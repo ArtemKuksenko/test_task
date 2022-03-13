@@ -11,7 +11,7 @@ class RunSingleGenerator:
 
     async def clear_redis_data(self) -> None:
         """
-        Очищаем данные ключа редис
+        Очищаем данные по ключам приложения.
         :return:
         """
         keys = await self.redis.keys(f"{REDIS_KEY}:{self.app_predix}:*")
