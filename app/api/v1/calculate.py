@@ -14,7 +14,6 @@ async def calculate():
     Генератор эмулирующий выполнение алгоритма
     :return:
     """
-    print("run")
     for i in range(15):
         await asyncio.sleep(1)
         yield

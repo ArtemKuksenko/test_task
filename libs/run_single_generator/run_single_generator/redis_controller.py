@@ -4,13 +4,11 @@ import pickle
 from aioredis import StrictRedis
 
 AWAIT_TIME = 0.1
-REDIS_KEY = "run_single_generator"
 
 
 class RedisController:
-    def __init__(self, redis: StrictRedis, name: str, app_prefix: str):
+    def __init__(self, redis: StrictRedis, key: str):
         self.redis = redis
-        key = f"{REDIS_KEY}:{app_prefix}:{name}"
         self.key_number = f"{key}:number"
         self.key_res = f"{key}:res"
         self.key_running = f"{key}:run"

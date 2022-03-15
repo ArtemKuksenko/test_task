@@ -1,6 +1,7 @@
 from run_single_generator import RunSingleGenerator
 
-from app.core.settings import settings
+from .logger import Logger
+from .settings import settings
 from app.utils import utils
 
 redis = utils.create_redis_client(
@@ -10,4 +11,5 @@ redis = utils.create_redis_client(
     password=settings.REDIS_PASSWORD
 )
 
-run_generator = RunSingleGenerator(redis, "my_app")
+logger = Logger("run_single_generator").logger
+run_generator = RunSingleGenerator(redis, "my_app", logger)
