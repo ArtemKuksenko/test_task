@@ -10,6 +10,10 @@ services:
       bash -c "python start.py"
     env_file:
       - .env.config
+    depends_on:
+      - redis
+    volumes:
+      - ./logs:/opt/app/logs
 
   redis:
     image: redis
