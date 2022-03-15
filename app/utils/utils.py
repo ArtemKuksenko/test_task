@@ -1,5 +1,4 @@
 import os
-
 import aioredis
 from dotenv import load_dotenv
 
